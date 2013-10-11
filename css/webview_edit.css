@@ -28,6 +28,7 @@
 }
 */
 
+/* On cache l'icone de chargement qui faisait decendre le menu */
 .topbar h1.bird-topbar-etched{
 	display: none !important;
 }
@@ -44,6 +45,11 @@
 
 .dropdown-menu{
 
+}
+
+.global-nav-inner .pushstate-spinner{
+	width: 0;
+	height: 0;
 }
 
 .pull-right .nav{
@@ -86,14 +92,14 @@
 	left: 0;
 }
 
-.front-signin {
+.front-card .front-signin {
     position: relative;
     margin: 65px auto 0 auto;
     top: 0;
     left: 0;
 }
 
-.front-signup {
+.front-card .front-signup {
     position: relative;
     margin: 35px auto 0 auto;
     top: 0;
