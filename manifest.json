@@ -11,6 +11,6 @@
   "author": "Erwan Martin",
   "offline_enabled" : false,
   "minimum_chrome_version" : "25",
-  "permissions": [ "webview","notifications" ],
+  "permissions": [ "webview","notifications","storage" ],
   "icons": { "16": "twitter-16.png", "128": "twitter-128.png" }
 }

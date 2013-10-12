@@ -1,6 +1,12 @@
 "use strict";
 
+var defaultSettings = new Array(
+    new Array('defilement_automatique','off'),
+    new Array('affichage_notifications','on')
+);
+
 chrome.app.runtime.onLaunched.addListener(function() {
+  initSettings();
   chrome.app.window.create('../window.html', {
     id: 'webview',
     //'frame' : 'none',
@@ -15,3 +21,24 @@ chrome.app.runtime.onLaunched.addListener(function() {
     maxWidth: 460
   });
 });
+
+function initSettings(){
+  initTheSetting(0);
+}
+
+function initTheSetting(cpt){
+  if(typeof(defaultSettings[cpt])!='undefined'){
+    var name = defaultSettings[cpt][0];
+    chrome.storage.sync.get(name,function(data){
+        if(typeof(data[name])=='undefined'){
+          var storageObject = {};
+          storageObject[name] = defaultSettings[cpt][1];
+          chrome.storage.sync.set(storageObject);
+        }
+
+        /*  Setting suivant */
+        cpt++;
+        initTheSetting(cpt);
+    });
+  }
+}

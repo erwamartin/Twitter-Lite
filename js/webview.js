@@ -21,6 +21,15 @@ $(document).ready(function() {
 		window.addEventListener("message", function(event) { 
 			//console.log('window received message:', event.data);
 			if(event.data.command=='haveTweets'){
+
+				var settingName = 'defilement_automatique';
+				chrome.storage.sync.get(settingName,function(data){
+					if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+						webview.contentWindow.postMessage({
+							command: 'loadTweets'
+						}, '*');
+					}
+				});
 				if(lastNotification['type']!='haveTweets'){
 					//console.log('window received message:', event.data);
 					/*var notification = webkitNotifications.createNotification(
@@ -29,7 +38,14 @@ $(document).ready(function() {
 					  'Nouveaux Tweets disponibles !'
 					);
 					notification.show();*/
-					notificationHaveTweets(webView.get(0));
+
+					var settingName = 'affichage_notifications';
+					chrome.storage.sync.get(settingName,function(data){
+						if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+							notificationHaveTweets(webView.get(0));
+						}
+					});
+
 				}
 			}
 			var time = new Date().getTime();
