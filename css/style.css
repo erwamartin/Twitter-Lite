@@ -38,6 +38,7 @@ fieldset{
 }
 
 #open_menu{
+	display: none;
 	position: absolute;
 	display: block;
 	text-indent: -9999px;
@@ -77,11 +78,21 @@ fieldset{
 }
 
 #header #reglages{
+	margin-left:100px;
 	padding-left: 28px;
 	height: 25px;
 	line-height: 25px;
 	margin-top: 2.5px;
 	background: url(../images/settings.png) no-repeat center left;
+	cursor: pointer;
+}
+
+#header #pause{
+	padding-left: 28px;
+	height: 25px;
+	line-height: 25px;
+	margin-top: 2.5px;
+	background: url(../images/pause.png) no-repeat center left;
 	cursor: pointer;
 }
 

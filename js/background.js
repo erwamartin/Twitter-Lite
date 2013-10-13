@@ -2,7 +2,8 @@
 
 var defaultSettings = new Array(
     new Array('defilement_automatique','off'),
-    new Array('affichage_notifications','on')
+    new Array('affichage_notifications','on'),
+    new Array('pause','off',true)
 );
 
 chrome.app.runtime.onLaunched.addListener(function() {
@@ -31,6 +32,10 @@ function initTheSetting(cpt){
     var name = defaultSettings[cpt][0];
     chrome.storage.sync.get(name,function(data){
         if(typeof(data[name])=='undefined'){
+          var storageObject = {};
+          storageObject[name] = defaultSettings[cpt][1];
+          chrome.storage.sync.set(storageObject);
+        }else if(typeof(defaultSettings[cpt][2])!='undefined' && defaultSettings[cpt][2]==true){
           var storageObject = {};
           storageObject[name] = defaultSettings[cpt][1];
           chrome.storage.sync.set(storageObject);

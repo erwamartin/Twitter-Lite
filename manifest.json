@@ -6,7 +6,7 @@
   },
   "manifest_version": 2,
   "name": "Twitter Lite",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "Toutes les fonctionnalités de Twitter dans une application",
   "author": "Erwan Martin",
   "offline_enabled" : false,

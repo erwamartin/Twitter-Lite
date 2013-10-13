@@ -2,11 +2,14 @@
 
 var notificationID = 0;
 var lastNotification = null;
+var settingName;
 
 $(document).ready(function() {
 	var webView = $('#webview');
 	webView.attr('src', 'http://www.twitter.com/');
 	webView.on('loadstop', function() {
+
+		$('#open_menu').show();
 		//$('h1').first().html('test');
 		//console.log('test'+cssContent());
 		/*webview.executeScript(
@@ -22,12 +25,18 @@ $(document).ready(function() {
 			//console.log('window received message:', event.data);
 			if(event.data.command=='haveTweets'){
 
-				var settingName = 'defilement_automatique';
+				settingName = 'defilement_automatique';
 				chrome.storage.sync.get(settingName,function(data){
 					if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
-						webview.contentWindow.postMessage({
-							command: 'loadTweets'
-						}, '*');
+						
+						settingName = 'pause';
+						chrome.storage.sync.get(settingName,function(data){
+							if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
+								webview.contentWindow.postMessage({
+									command: 'loadTweets'
+								}, '*');
+							}
+						});
 					}
 				});
 				if(lastNotification['type']!='haveTweets'){
@@ -39,10 +48,17 @@ $(document).ready(function() {
 					);
 					notification.show();*/
 
-					var settingName = 'affichage_notifications';
+					settingName = 'affichage_notifications';
 					chrome.storage.sync.get(settingName,function(data){
 						if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
-							notificationHaveTweets(webView.get(0));
+
+							settingName = 'pause';
+							chrome.storage.sync.get(settingName,function(data){
+								if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
+									notificationHaveTweets(webView.get(0));
+								}
+							});
+
 						}
 					});
 
