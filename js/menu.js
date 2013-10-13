@@ -49,6 +49,24 @@ $(function(){
 		});
 		closeSettingsPannel();
 	});
+
+
+	$('#pause').click(function(){
+		var storageObject = {};
+		var name = $(this).attr('id');
+		var value = 'off';
+		if($('#pause').hasClass('actif')){
+			$('#pause').css({backgroundImage:'url(../images/pause.png)',color:'#bbb'});
+			$('#pause').removeClass('actif');
+		}else{
+			$('#pause').css({backgroundImage:'url(../images/pause_actif.png)',color:'#fff'});
+			$('#pause').addClass('actif');
+
+			value = 'on';
+		}
+		storageObject[name] = value;
+		chrome.storage.sync.set(storageObject);
+	});
 });
 
 function closeSettingsPannel(){
