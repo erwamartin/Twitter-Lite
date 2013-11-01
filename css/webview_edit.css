@@ -74,6 +74,17 @@
 	display: none;
 }
 
+
+/* On cache le menu le paramètres */
+.pull-right .nav{
+	display:none;
+}
+
+/* On rééquilibre l'icone en enveloppe au centre */
+.pull-right .dm-nav{
+	margin-left:15px;
+}
+
 /* Footer */
 .footer{
 	display: none;
@@ -196,4 +207,11 @@
 .dropdown-caret .caret-inner,
 .dropdown-caret .caret-outer{
 	display: none;
+}
+
+/* Page profil */
+
+/* On réduit le padding des infos (followers...) */
+body .profile-card.profile-header .stats a{
+	padding-right:10px;
 }
