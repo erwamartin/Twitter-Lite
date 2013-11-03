@@ -2,6 +2,7 @@
 
 var notificationID = 0;
 var lastNotification = null;
+var lastLoadingTweets = null;
 var settingName;
 
 $(document).ready(function() {
@@ -23,6 +24,13 @@ $(document).ready(function() {
 
 		window.addEventListener("message", function(event) { 
 			//console.log('window received message:', event.data);
+			var time = new Date().getTime();
+
+			// On initialise pour le premier chargement de la page (affichage classique)
+			if(lastLoadingTweets==null){
+				lastLoadingTweets = {'timestamp' : time};
+			}
+
 			if(event.data.command=='haveTweets'){
 
 				settingName = 'defilement_automatique';
@@ -61,10 +69,29 @@ $(document).ready(function() {
 
 						}
 					});
+					lastLoadingTweets = {'timestamp' : time};
+				}
+			}else if(event.data.command=='noHaveTweets'){
+				/* Si cela fait plus de 30 secondes que l'on a pas trouvé de tweets */
+				//console.log((time-(lastLoadingTweets['timestamp']+(30*1000)))/1000);
+				if(lastLoadingTweets['timestamp']+(30*1000)<time){
+					settingName = 'defilement_automatique';
+					chrome.storage.sync.get(settingName,function(data){
+						if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+							settingName = 'pause';
+							chrome.storage.sync.get(settingName,function(data){
+								if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
+									webview.contentWindow.postMessage({
+										command: 'clickHomeButton'
+									}, '*');
+									lastLoadingTweets = {'timestamp' : time};
+								}
+							});
 
+						}
+					});
 				}
 			}
-			var time = new Date().getTime();
 			lastNotification = {'type' : event.data.command, 'timestamp' : time};
 		});
 
@@ -161,6 +188,9 @@ var functionJS = function() {
 			},2000);
 		}else if(event.data.command=='loadTweets'){
 			simulate(document.getElementsByClassName('new-tweets-bar')[0],'click');
+			window.scrollTo(0,0);
+		}else if(event.data.command=='clickHomeButton'){
+			simulate(document.getElementById('global-nav-home').getElementsByClassName('js-nav')[0],'click');
 			window.scrollTo(0,0);
 		}
 	}
