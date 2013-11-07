@@ -190,8 +190,11 @@ var functionJS = function() {
 			simulate(document.getElementsByClassName('new-tweets-bar')[0],'click');
 			window.scrollTo(0,0);
 		}else if(event.data.command=='clickHomeButton'){
-			simulate(document.getElementById('global-nav-home').getElementsByClassName('js-nav')[0],'click');
-			window.scrollTo(0,0);
+			// Si on est sur la page d'accueil
+			if(document.getElementsByClassName('wrapper-home').length>0){
+				simulate(document.getElementById('global-nav-home').getElementsByClassName('js-nav')[0],'click');
+				window.scrollTo(0,0);
+			}
 		}
 	}
 
