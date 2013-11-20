@@ -10,7 +10,23 @@ $(document).ready(function() {
 	webView.attr('src', 'http://www.twitter.com/');
 	webView.on('loadstop', function() {
 
-		$('#open_menu').show();
+		window.setTimeout(function(){ 
+			$('#open_menu').show();
+			settingName = 'showBubbleParametres';
+			chrome.storage.sync.get(settingName,function(data){
+				if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+					$('#bubble_parametres').show();
+					$('#background_bubble').show();
+					$('#background_bubble').on('click',function(){
+						$('#bubble_parametres').hide();
+						$('#background_bubble').hide();
+						var storageObject = {};
+						storageObject['showBubbleParametres'] = 'off';
+          				chrome.storage.sync.set(storageObject);
+					});
+				}
+			});
+		},1500);
 		//$('h1').first().html('test');
 		//console.log('test'+cssContent());
 		/*webview.executeScript(
@@ -40,9 +56,18 @@ $(document).ready(function() {
 						settingName = 'pause';
 						chrome.storage.sync.get(settingName,function(data){
 							if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
-								webview.contentWindow.postMessage({
-									command: 'loadTweets'
-								}, '*');
+								settingName = 'remontee_automatique';
+								chrome.storage.sync.get(settingName,function(data){
+									if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+										webview.contentWindow.postMessage({
+											command: 'clickHomeButton'
+										}, '*');
+									}else{
+										webview.contentWindow.postMessage({
+											command: 'loadTweets'
+										}, '*');
+									}
+								});
 							}
 						});
 					}
@@ -74,23 +99,28 @@ $(document).ready(function() {
 			}else if(event.data.command=='noHaveTweets'){
 				/* Si cela fait plus de 30 secondes que l'on a pas trouvé de tweets */
 				//console.log((time-(lastLoadingTweets['timestamp']+(30*1000)))/1000);
-				if(lastLoadingTweets['timestamp']+(30*1000)<time){
-					settingName = 'defilement_automatique';
-					chrome.storage.sync.get(settingName,function(data){
-						if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
-							settingName = 'pause';
+				settingName = 'remontee_automatique';
+				chrome.storage.sync.get(settingName,function(data){
+					if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+						if(lastLoadingTweets['timestamp']+(30*1000)<time){
+							settingName = 'defilement_automatique';
 							chrome.storage.sync.get(settingName,function(data){
-								if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
-									webview.contentWindow.postMessage({
-										command: 'clickHomeButton'
-									}, '*');
-									lastLoadingTweets = {'timestamp' : time};
+								if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+									settingName = 'pause';
+									chrome.storage.sync.get(settingName,function(data){
+										if(typeof(data[settingName])!='undefined' && data[settingName]!='on'){
+											webview.contentWindow.postMessage({
+												command: 'clickHomeButton'
+											}, '*');
+											lastLoadingTweets = {'timestamp' : time};
+										}
+									});
+
 								}
 							});
-
 						}
-					});
-				}
+					}
+				});
 			}
 			lastNotification = {'type' : event.data.command, 'timestamp' : time};
 		});
@@ -188,7 +218,7 @@ var functionJS = function() {
 			},2000);
 		}else if(event.data.command=='loadTweets'){
 			simulate(document.getElementsByClassName('new-tweets-bar')[0],'click');
-			window.scrollTo(0,0);
+			//window.scrollTo(0,0);
 		}else if(event.data.command=='clickHomeButton'){
 			// Si on est sur la page d'accueil
 			if(document.getElementsByClassName('wrapper-home').length>0){

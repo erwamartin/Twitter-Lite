@@ -1,8 +1,10 @@
 "use strict";
 
 var defaultSettings = new Array(
-    new Array('defilement_automatique','off'),
-    new Array('affichage_notifications','on'),
+    new Array('defilement_automatique','on'),
+    new Array('remontee_automatique','off'),
+    new Array('affichage_notifications','off'),
+    new Array('showBubbleParametres','on'),
     new Array('pause','off',true)
 );
 

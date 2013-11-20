@@ -13,13 +13,20 @@
       <a id="pause">Pause</a>
     	<a id="reglages">Réglages</a>
    	</header>
-    <div id="background_pannel_reglages"></div>
+    <div id="background_bubble" class="background"></div>
+    <div id="bubble_parametres" class="bubble">
+      <p>Accedez aux paramètres de l'application en cliquant sur la flèche.</p>
+    </div>
+    <div id="background_pannel_reglages" class="background"></div>
     <div id="pannel_reglages">
       <span class="close icon">Fermer</span>
       <h2>Réglages de l'application</h2>
       <fieldset>
         <input type="checkbox" id="defilement_automatique" class="floatLeft reglage" /> 
-        <label for="defilement_automatique" class="floatLeft">Défilement automatique</label>
+        <label for="defilement_automatique" class="floatLeft">Chargement des nouveaux tweets automatique</label>
+        <div class="clearFix"></div>
+        <input type="checkbox" id="remontee_automatique" class="floatLeft reglage" /> 
+        <label for="remontee_automatique" class="floatLeft">Remonter automatiquement le flux</label>
         <div class="clearFix"></div>
         <input type="checkbox" id="affichage_notifications" class="floatLeft reglage" /> 
         <label for="affichage_notifications" class="floatLeft">Activer les notifications</label>

@@ -121,7 +121,7 @@ fieldset{
 	background: url(../images/close.png) no-repeat center center;
 }
 
-#background_pannel_reglages{
+.background{
 	display: none;
 	position: absolute;
 	top:0;
@@ -136,4 +136,34 @@ fieldset{
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
+}
+
+.bubble{
+	display: none;
+	position: absolute;
+	padding: 10px;
+	z-index: 9999;
+	background: #FFF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.bubble:after{
+	content: "";
+	position: absolute;
+	top: -10px;
+	left: 5px;
+	border-style: solid;
+	border-width: 0 10px 15px;
+	border-color: #FFF transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+}
+
+#bubble_parametres{
+	top : 40px;
+	left: 0px;
+	width: 200px;
 }
