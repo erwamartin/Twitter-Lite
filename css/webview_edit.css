@@ -4,7 +4,7 @@
 }
 
 /* Suppression de la banière de cookies */
-body .eu-cookie-notice{
+body .eu-cookie-notice, .BannersContainer{
 	display:none;
 }
 
@@ -219,4 +219,37 @@ body .eu-cookie-notice{
 /* On réduit le padding des infos (followers...) */
 body .profile-card.profile-header .stats a{
 	padding-right:10px;
+}
+
+/* Tendances */
+#timeline .header-inner{
+	overflow: hidden;
+}
+
+#content-main-heading{
+	float: left;
+}
+
+#bouton_tendances{
+	float: right;
+}
+
+#block_tendances{
+    opacity: 0;  
+    height: 0;
+    overflow: hidden;
+}
+
+#block_tendances.show{
+	opacity: 1; 
+	height: auto;
+}
+
+#block_tendances .close{
+	background-position: -80px -510px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	text-indent: -999999px;
+	cursor: pointer;
 }

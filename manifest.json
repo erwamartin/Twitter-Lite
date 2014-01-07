@@ -6,11 +6,11 @@
   },
   "manifest_version": 2,
   "name": "Twitter Lite",
-  "version": "0.5",
+  "version": "0.5.5",
   "description": "Toutes les fonctionnalités de Twitter dans une application",
   "author": "Erwan Martin",
   "offline_enabled" : false,
   "minimum_chrome_version" : "25",
-  "permissions": [ "webview","notifications","storage" ],
+  "permissions": [ "webview","notifications","storage","https://www.google-analytics.com/" ],
   "icons": { "16": "twitter-16.png", "128": "twitter-128.png" }
 }

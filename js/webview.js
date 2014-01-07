@@ -27,16 +27,6 @@ $(document).ready(function() {
 				}
 			});
 		},1500);
-		//$('h1').first().html('test');
-		//console.log('test'+cssContent());
-		/*webview.executeScript(
-	      //{file: "js/webview_edit.js"},
-	      {code: '(' + addCSS + ')()'},
-	      function(results) {
-	        // return value stored in results
-	        console.log(results);
-	        console.log('done');
-	      });*/
 
 		window.addEventListener("message", function(event) { 
 			//console.log('window received message:', event.data);
@@ -180,6 +170,8 @@ function addCssJS(webview_in,url_css){
 }
 
 var functionJS = function() {
+
+	// Premier chargement
 	if(typeof(chargement)=='undefined'){
 	    var head = document.getElementsByTagName("head")[0].innerHTML;	
 		var headWithCss = head + '<style type="text/css">'+cssContent+'</style>';
@@ -197,8 +189,44 @@ var functionJS = function() {
 
 	    //_sendMessage('testABCS');
 
+	    // Ajout des trends
+	    var tendanceTitle = document.getElementsByClassName('trends-container')[0].getElementsByClassName('flex-module-header')[0].getElementsByClassName('trend-location')[0].innerHTML;
+	    document.getElementsByClassName('content-header')[0].getElementsByClassName('header-inner')[0].innerHTML +='<a href="#" id="bouton_tendances">'+tendanceTitle+'</a>';
+
+	    var trends = document.getElementsByClassName("dashboard")[0].getElementsByClassName("trends")[0];
+		trends.id = "block_tendances";
+		trends.innerHTML += '<span class="close icon close-medium" id="close_tendances" >Fermer</span>';
+
+		document.getElementById('page-container').insertBefore(trends,document.getElementById('page-container').firstChild);
+
+		document.getElementById('bouton_tendances').removeEventListener('click');
+		document.getElementById('bouton_tendances').addEventListener('click', toogleTendances,false);
+		document.getElementById('close_tendances').removeEventListener('click');
+		document.getElementById('close_tendances').addEventListener('click', toogleTendances,false);
+		//document.getElementById('page-container').getElementsByClassName("content-main")[0].insertBefore(trends,document.getElementById('page-container').getElementsByClassName("stream-container")[0]);
+
 	    window.addEventListener('message', _receiveMessage);
-	 }
+	 }else if(document.getElementById('bouton_tendances')!=null && document.getElementById('close_tendances')!=null){
+
+	 	// Ajout des events supprimés lors du chargement d'une autre page que la home
+		document.getElementById('bouton_tendances').removeEventListener('click');
+		document.getElementById('bouton_tendances').addEventListener('click', toogleTendances,false);
+		document.getElementById('close_tendances').removeEventListener('click');
+		document.getElementById('close_tendances').addEventListener('click', toogleTendances,false);
+
+	}
+
+	 function toogleTendances(evt){
+		evt.preventDefault();
+		var trends = document.getElementById('block_tendances');
+		var classString = trends.className, nameIndex = classString.indexOf('show');
+		 if (nameIndex == -1) {
+   			classString += ' ' + 'show';
+	    }else {
+	        classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+'show'.length);
+	    }
+	    document.getElementById('block_tendances').className = classString;
+	}
 
 	 function _receiveMessage(event) {
 		if (typeof(appWindow)=='undefined' || typeof(appOrigin)=='undefined') {
