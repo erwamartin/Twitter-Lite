@@ -253,3 +253,40 @@ body .profile-card.profile-header .stats a{
 	text-indent: -999999px;
 	cursor: pointer;
 }
+
+/* Corrections nouveau look 16/01/2014 */
+.rosetta .nav.right-actions{
+	display: block !important;
+}
+
+.rosetta .nav.right-actions .topbar-tweet-btn{
+	margin-right: 0 !important;
+}
+
+.rosetta .pull-right div[role=search]{
+	display: none;
+}
+
+.rosetta .Gallery-content,
+.rosetta .GalleryTweet .simple-tweet{
+	width: 400px !important;
+	min-width: 400px !important;
+	box-sizing: border-box;
+}
+
+.rosetta .geo-picker{
+	width: auto !important;
+}
+
+.rosetta .stats a strong{
+	font-size: 16px;
+}
+
+.rosetta .profile-card.profile-header .stats a,
+.rosetta #profile_popup .stats a{
+	padding: 6px;
+}
+
+.rosetta .tweet-box-extras button.btn{
+	padding: 4px;
+}
