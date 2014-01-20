@@ -1,32 +1,95 @@
 "use strict";
 
+var app = {
+	controllers : {
+		loaderController : new loaderController(),
+	}
+}
+
 var notificationID = 0;
 var lastNotification = null;
 var lastLoadingTweets = null;
 var settingName;
 
 $(document).ready(function() {
+
+	app.controllers.loaderController.initialize({
+		conteneur : 'body',
+		elements : {
+			overlay : {
+				content : 	$('<div></div>').addClass('loader_conteneur').append([
+								$('<div></div>').addClass('logo big').append([
+									$('<img src="twitter-128.png">'),
+									$('<p>Twitter Lite</p>'),
+									$('<p class="loading"></p>').text('Chargement en cours...')
+								]),
+								//$('<div></div>').addClass('loader'),
+								//$('<p class="text"></p>').text('Chargement en cours...')
+							])
+			}
+		}
+	});
+
+	load();
+
+});
+
+function load(){
+	app.controllers.loaderController.show();
+	if (navigator.onLine) {
+		loadApp();
+	}else{
+		load404();
+	}
+}
+
+function load404(){
+	app.controllers.loaderController.hide();
+	$('#conteneur_webview').prepend('<div id="page404" class="page"></div>').show();
+	$('#page404').load('/404.html',function(){
+		$('#reload').off('click').on('click',function(evt){
+			evt.preventDefault();
+			app.controllers.loaderController.show();
+			window.setTimeout(function(){ 
+				if (navigator.onLine) {
+					loadApp();
+				}else{
+					app.controllers.loaderController.hide();
+				}
+			},300);
+		})
+	});
+}
+
+function loadApp(){
+	$('.page').remove();
+	$('#webview').show();
 	var webView = $('#webview');
 	webView.attr('src', 'http://www.twitter.com/');
 	webView.on('loadstop', function() {
 
 		window.setTimeout(function(){ 
+
 			$('#open_menu').show();
-			settingName = 'showBubbleParametres';
-			chrome.storage.sync.get(settingName,function(data){
-				if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
-					$('#bubble_parametres').show();
-					$('#background_bubble').show();
-					$('#background_bubble').on('click',function(){
-						$('#bubble_parametres').hide();
-						$('#background_bubble').hide();
-						var storageObject = {};
-						storageObject['showBubbleParametres'] = 'off';
-          				chrome.storage.sync.set(storageObject);
-					});
-				}
-			});
-		},1500);
+			$('#webview').show();
+			app.controllers.loaderController.hide();
+
+		},500);
+
+		settingName = 'showBubbleParametres';
+		chrome.storage.sync.get(settingName,function(data){
+			if(typeof(data[settingName])!='undefined' && data[settingName]=='on'){
+				$('#bubble_parametres').show();
+				$('#background_bubble').show();
+				$('#background_bubble').on('click',function(){
+					$('#bubble_parametres').hide();
+					$('#background_bubble').hide();
+					var storageObject = {};
+					storageObject['showBubbleParametres'] = 'off';
+      				chrome.storage.sync.set(storageObject);
+				});
+			}
+		});
 
 		window.addEventListener("message", function(event) { 
 			//console.log('window received message:', event.data);
@@ -128,8 +191,7 @@ $(document).ready(function() {
 		function() { 
 			console.log('refresh_haveTweets');
 	},2000);*/
-
-});
+}
 
 function notificationHaveTweets(webview_in){
 	var options = {};

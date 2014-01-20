@@ -2,7 +2,8 @@ $(function(){
 
 	loadSettings();
 
-	$('#open_menu').click(function(){
+	$('#open_menu').click(function(evt){
+		evt.preventDefault();
 		if($('#open_menu').hasClass('open')){
 			$('#conteneur_webview').animate({paddingTop:'0'});
 			$('#header').animate({height:'0'},function(){
