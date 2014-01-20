@@ -264,7 +264,35 @@ body .profile-card.profile-header .stats a{
 }
 
 .rosetta .pull-right div[role=search]{
-	display: none;
+	/*display: none;*/
+	float: none;
+	position: absolute;
+	margin-top: 45px;
+	width: 100%;
+	left: 0;
+}
+
+.rosetta .pull-right div[role=search] form{
+	width: 100%;
+}
+
+.rosetta .global-nav #global-nav-search .search-input{
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.rosetta .global-nav .search-input{
+	height: 30px;
+}
+
+.rosetta .wrapper, .rosetta .wrapper-narrow{
+	padding: 88px 23px 15px;
+}
+
+.rosetta .global-nav .form-search .dropdown-menu{
+	left: 0 !important;
+	width: 100%;
+	margin : 0;
 }
 
 .rosetta .Gallery-content,
