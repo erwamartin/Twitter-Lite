@@ -267,6 +267,9 @@ var functionJS = function() {
 		document.getElementById('close_tendances').addEventListener('click', toogleTendances,false);
 		//document.getElementById('page-container').getElementsByClassName("content-main")[0].insertBefore(trends,document.getElementById('page-container').getElementsByClassName("stream-container")[0]);
 
+		//var search_bar =  document.querySelector('[role=search]');
+		//document.getElementById('page-container').insertBefore(search_bar,document.getElementById('page-container').firstChild);
+
 	    window.addEventListener('message', _receiveMessage);
 	 }else if(document.getElementById('bouton_tendances')!=null && document.getElementById('close_tendances')!=null){
 

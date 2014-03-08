@@ -255,6 +255,14 @@ body .profile-card.profile-header .stats a{
 }
 
 /* Corrections nouveau look 16/01/2014 */
+.rosetta #page-outer{
+	overflow-x:hidden;
+}
+
+.rosetta .global-nav{
+	width: 100%;
+}
+
 .rosetta .nav.right-actions{
 	display: block !important;
 }
@@ -285,8 +293,13 @@ body .profile-card.profile-header .stats a{
 	height: 30px;
 }
 
+.rosetta #global-nav-search{
+	margin-left: -7px;
+}
+
 .rosetta .wrapper, .rosetta .wrapper-narrow{
-	padding: 88px 23px 15px;
+	padding: 88px 0 15px;
+	max-width: 400px;
 }
 
 .rosetta .global-nav .form-search .dropdown-menu{
