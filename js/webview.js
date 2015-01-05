@@ -70,7 +70,7 @@ function loadApp(){
 
 		window.setTimeout(function(){ 
 
-			$('#open_menu').show();
+			//$('#open_menu').show();
 			$('#webview').show();
 			app.controllers.loaderController.hide();
 
